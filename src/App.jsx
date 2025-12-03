@@ -6,6 +6,12 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Home from "./pages/Home.jsx";
 import Results from "./pages/Results.jsx";
 import HotelDetail from "./pages/HotelDetail.jsx";
+import ReserveConfirm from "./pages/auth/ReserveConfirm.jsx";
+import MyBookings from "./pages/MyBooking.jsx";
+import BookingDetail from "./pages/BookingDetail.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import AdminRoute from "./components/AdminRoute.jsx";
+import InventoryManagement from "./pages/admin/InventoryManagement.jsx";
 
 function App() {
   return (
@@ -30,6 +36,24 @@ function App() {
       />
 
       <Route
+        path="/admin"
+        element={
+          <AdminRoute>
+            <AdminDashboard /> {/* Destino del login de admin */}
+          </AdminRoute>
+        }
+      />
+
+      <Route
+        path="/admin/management"
+        element={
+          <AdminRoute>
+            <InventoryManagement />
+          </AdminRoute>
+        }
+      />
+
+      <Route
         path="/results"
         element={
           <ProtectedRoute>
@@ -42,6 +66,32 @@ function App() {
         element={
           <ProtectedRoute>
             <HotelDetail />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reserve/:id"
+        element={
+          <ProtectedRoute>
+            <ReserveConfirm />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/bookings"
+        element={
+          <ProtectedRoute>
+            <MyBookings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/bookings/:id"
+        element={
+          <ProtectedRoute>
+            <BookingDetail />
           </ProtectedRoute>
         }
       />

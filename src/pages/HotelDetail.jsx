@@ -38,8 +38,13 @@ const HotelDetail = () => {
 
   // Función que inicia el flujo de reserva
   const handleReserve = () => {
+    // Redirigir a la página de confirmación, pasando los datos necesarios
     navigate(`/reserve/${hotel.id}`, {
-      state: { hotel, numNights, totalPrice },
+      state: {
+        hotel,
+        numNights,
+        totalPrice,
+      },
     });
   };
 

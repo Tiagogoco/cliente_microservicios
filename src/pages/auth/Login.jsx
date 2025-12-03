@@ -30,16 +30,15 @@ const Login = () => {
     }
 
     try {
-      // 3. Llamar a la función del servicio API
-      const token = await loginUser(email, password);
+      const { token, user } = await loginUser(email, password);
+      login(token, user);
 
-      // 4. Si es exitoso, actualizar el Contexto
-      login(token);
-
-      // 5. Redirigir al panel principal
-      navigate("/home");
+      if (user && user.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/home", { replace: true });
+      }
     } catch (err) {
-      // Manejar errores (ej. Credenciales inválidas [cite: 140])
       setError(
         err.message || "Fallo la conexión con el servicio de autenticación."
       );

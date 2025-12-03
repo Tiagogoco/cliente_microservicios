@@ -1,14 +1,11 @@
 import React, { createContext, useState, useContext } from "react";
 
-// 1. Crear el Contexto
 const AuthContext = createContext();
 
-// 2. Hook para usar el contexto fácilmente
 export const useAuth = () => {
   return useContext(AuthContext);
 };
 
-// 3. Proveedor del Contexto
 export const AuthProvider = ({ children }) => {
   // Estado para guardar el token JWT
   const [token, setToken] = useState("FAKE_TOKEN_FOR_DEV_ONLY"); //CAMBIAR CUANDO ESTE LISTO
@@ -16,22 +13,25 @@ export const AuthProvider = ({ children }) => {
     role: "Cliente",
     name: "Usuario Temporal",
   });
-  // Función de Login (recibe el token de la API)
-  const login = (jwtToken) => {
+  // (recibe el token de la API)
+  const login = (jwtToken, userData) => {
     localStorage.setItem("jwt_token", jwtToken);
+    localStorage.setItem("user_data", JSON.stringify(userData)); //
     setToken(jwtToken);
-    // Aquí podrías decodificar el token para obtener el user/rol
-    // Por ahora, solo marcamos como logueado
-    setUser({ role: "Cliente" }); // Asumimos 'Cliente' por defecto
+    setUser(userData);
   };
 
   // Función de Logout
   const logout = () => {
     localStorage.removeItem("jwt_token");
+    localStorage.removeItem("user_data"); //
     setToken(null);
     setUser(null);
   };
 
+  const hasRole = (requiredRole) => {
+    return user?.role === requiredRole;
+  };
   // Valor que se provee a los componentes hijos
   const value = {
     token,
@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated: !!token,
     login,
     logout,
+    hasRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

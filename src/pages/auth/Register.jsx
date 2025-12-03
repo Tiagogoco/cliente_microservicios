@@ -12,6 +12,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("");
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -30,7 +31,7 @@ const Register = () => {
       return;
     }
 
-    const userData = { name, email, password };
+    const userData = { name, email, password, role: "client" };
 
     try {
       // 2. Llamar a la función del servicio API
@@ -123,6 +124,20 @@ const Register = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
             />
+          </div>
+
+          <div className="mb-4">
+            <label className="label">
+              <span className="label-text">Rol del Usuario</span>
+            </label>
+            <select
+              className="select select-bordered w-full"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="client">Cliente</option>
+              <option value="admin">Administrador</option>
+            </select>
           </div>
 
           {/* Mensajes de feedback */}

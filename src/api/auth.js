@@ -28,10 +28,10 @@ export async function loginUser(email, password) {
         data.message || "Error al iniciar sesión. Verifica tus credenciales."
       );
     }
-
-    // El sistema devuelve el token al cliente [cite: 140]
-    // Asumiendo que el cuerpo de la respuesta contiene { token: '...' }
-    return data.token;
+    return {
+      token: data.token,
+      user: data.user, // 👈 Ahora devolvemos también el objeto user
+    };
   } catch (error) {
     console.error("API Error (Login):", error);
     throw error;
